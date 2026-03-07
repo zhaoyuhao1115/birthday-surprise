@@ -441,13 +441,203 @@
                 font-size: 1.8rem;
             }
         }
+
+        /* 在一起计时器 */
+        .timer {
+            font-size: 1.3rem;
+            color: #ffd700;
+            margin: 1.5rem 0;
+            padding: 1rem 2rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 30px;
+            animation: fadeInUp 1.5s ease forwards;
+            animation-delay: 1.5s;
+            opacity: 0;
+        }
+
+        /* 情话轮播 */
+        .love-quotes {
+            margin-top: 2rem;
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .quote-text {
+            font-size: 1.2rem;
+            color: #fff;
+            padding: 1.5rem;
+            background: rgba(255, 107, 157, 0.15);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.8;
+            opacity: 0;
+            animation: quoteFade 1s ease forwards;
+        }
+
+        @keyframes quoteFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .quote-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quote-dot.active {
+            background: #ff6b9d;
+            transform: scale(1.3);
+        }
+
+        /* 情书按钮 */
+        .letter-btn {
+            margin-top: 2rem;
+            margin-left: 1rem;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 25px rgba(231, 76, 140, 0.4);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease forwards;
+            animation-delay: 2.5s;
+        }
+
+        .letter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(231, 76, 140, 0.6);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* 情书模态框 */
+        .letter-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .letter-modal.show {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .letter-content {
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 100%);
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            box-shadow: 0 0 50px rgba(255, 107, 157, 0.2);
+            position: relative;
+        }
+
+        .letter-title {
+            color: #ff6b9d;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+        }
+
+        .letter-text {
+            color: #e8d5eb;
+            line-height: 2.2;
+            font-size: 1.1rem;
+            white-space: pre-wrap;
+        }
+
+        .letter-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #ff6b9d;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .letter-close:hover {
+            transform: rotate(90deg);
+            color: #fff;
+        }
+
     </style>
 </head>
 <body>
     <!-- 入口页面 -->
     <div id="entry-page">
-        <h1 class="entry-title">一份惊喜等待着你</h1>
-        <button class="open-btn" onclick="openSurprise()">点击打开惊喜</button>
+        <h1 class="entry-title">亲爱的宝贝儿</h1>
+
+        <!-- 模糊图片区域 -->
+        <div id="photo-container" style="display: none; margin-bottom: 1rem; text-align: center;">
+            <img id="mystery-photo" src="丑照.jpg" alt="神秘照片"
+                 style="max-width: 5%; max-height: 250px; border-radius: 15px;
+                        box-shadow: 0 8px 32px rgba(255, 107, 157, 0.4);
+                        filter: blur(15px); cursor: pointer; transition: all 0.5s ease;"
+                 onclick="zoomPhoto()">
+            <div id="zoom-hint" style="color: rgba(255,255,255,0.6); margin-top: 1rem; font-size: 1rem;">
+                太模糊了？点击变清楚
+            </div>
+        </div>
+
+        <!-- 满意度询问弹窗 -->
+        <div id="satisfaction-modal" style="display: none; margin-top: 1rem; text-align: center;">
+            <div style="background: linear-gradient(135deg, #2d1b4e, #1a0a2e); padding: 1.5rem 2rem; border-radius: 15px; display: inline-block; border: 1px solid rgba(255,107,157,0.3); box-shadow: 0 0 30px rgba(255,107,157,0.3);">
+                <div style="color: #fff; font-size: 1.2rem; margin-bottom: 1rem;">对这个惊喜你满意吗？</div>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="answerSatisfaction(true)" style="padding: 0.6rem 1.5rem; font-size: 1rem; background: linear-gradient(45deg, #ff6b9d, #c44569); color: white; border: none; border-radius: 20px; cursor: pointer; transition: all 0.3s ease;">我很满意</button>
+                    <button onclick="answerSatisfaction(false)" style="padding: 0.6rem 1.5rem; font-size: 1rem; background: linear-gradient(45deg, #9b59b6, #e74c8c); color: white; border: none; border-radius: 20px; cursor: pointer; transition: all 0.3s ease;">我不满意</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 真正的惊喜过渡页面 -->
+        <div id="real-surprise-page" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1a0a2e, #2d1b4e); z-index: 150; justify-content: center; align-items: center; flex-direction: column;">
+            <div style="color: #ff6b9d; font-size: 1.8rem; text-align: center; line-height: 2; animation: pulse 1s ease-in-out infinite;">
+                真正的惊喜这才来了<br>请耐心等待
+            </div>
+            <div id="countdown" style="color: #ffd700; font-size: 4rem; margin-top: 2rem; font-weight: bold;">3</div>
+        </div>
+
+        <button class="open-btn" id="entry-btn" onclick="handleEntryClick()">点击打开惊喜</button>
     </div>
 
     <!-- 惊喜页面 -->
@@ -458,9 +648,9 @@
             <div class="date-info">农历二月十三 · 阳历三月十一</div>
 
             <div class="distance">
-                <span class="city">石家庄</span>
-                <span class="heart-line">❤️</span>
                 <span class="city">广州</span>
+                <span class="heart-line">❤️</span>
+                <span class="city">石家庄</span>
             </div>
 
             <div class="message">
@@ -474,10 +664,30 @@
                 我会一直爱你，直到永远 ❤️
             </div>
 
-            <button class="memory-btn" onclick="openCarousel()">查看我们的回忆</button>
+            <div class="timer" id="timer">我们已经在一起 <span id="days-count">0</span> 天</div>
+
+            <div class="button-container">
+                <button class="memory-btn" onclick="openCarousel()">查看我们的回忆</button>
+                <button class="letter-btn" onclick="openLetter()">我想对你说的话</button>
+            </div>
+
+            <!-- 情话轮播 -->
+            <div class="love-quotes">
+                <div class="quote-text" id="quote-text"></div>
+                <div class="quote-dots" id="quote-dots"></div>
+            </div>
         </div>
 
-        <div class="footer">永远爱你的那个人 ❤️</div>
+        <div class="footer">永远爱你的HAO ❤️</div>
+    </div>
+
+    <!-- 情书模态框 -->
+    <div class="letter-modal" id="letter-modal">
+        <div class="letter-content">
+            <span class="letter-close" onclick="closeLetter()">&times;</span>
+            <div class="letter-title">致我的女孩索晓茹</div>
+            <div class="letter-text" id="letter-text"></div>
+        </div>
     </div>
 
     <!-- 照片轮播模态框 -->
@@ -525,6 +735,37 @@
     </div>
 
     <script>
+        // 情书内容
+        const letterContent = `晓茹，提笔写下这些字的时候，脑海里全是你的模样，心里满是藏不住的温柔与欢喜，想把所有细碎的心意，都慢慢说给你听。
+
+说来也奇妙，我们初中就已是同校相识的人，明明在同一个校园里，走过同一条走廊，彼此熟悉却未曾走近，原来命运早早就为我们埋下了伏笔，等一个合适的时机，让我们从相识，走向相知、相爱。去年，经人介绍，我们终于走到了一起，2025年5月31日，这个日子我一直牢牢记在心里，那一天，我知道，我找到了那个想共度往后每一段时光的人。
+
+还记得我第一次去你家，一时欣喜又紧张，不知不觉就喝多了，浑身发沉、脑子发懵，狼狈又笨拙。是你一直陪在我身边，没有一丝嫌弃，轻轻扶着我坐下，给我递温水、擦脸颊，耐心地照顾着我的小狼狈。那一刻，看着你温柔又认真的模样，我心里满是暖意，也更加确定，你就是那个会一直包容我、照顾我的人，这份细碎的温暖，我一直记在心底，从未忘记。
+
+和你在一起的这些日子，每一段时光都闪闪发光。我们一起奔赴香港，看维多利亚港的灯火璀璨，吹着海风，聊着无关紧要的琐事，却觉得无比安心；我们一起漫步北京，走进雍和宫的红墙古院，感受那份宁静与虔诚，把心底的期许悄悄珍藏；也在北京，赴一场凤凰传奇的演唱会，跟着熟悉的旋律并肩合唱，把热闹与欢喜刻进回忆里；我们一起奔赴南澳岛，看蔚蓝的大海，踩柔软的沙滩，听海浪拍岸的声音，把温柔与浪漫都定格在那些瞬间。这些一起走过的路，看过的风景，经历的欢喜，都成了我心底最珍贵的回忆，往后，我还想和你去更多地方，看更多风景，赴更多欢喜，把每一个平凡的日子都过成我们喜欢的样子。
+
+我最幸运的，莫过于遇见了善解人意的你。生活总有细碎的烦恼，工作总有不顺心的时刻，可每当我遇到问题、陷入迷茫的时候，你从不会抱怨，也不会敷衍，而是陪着我，一起分析问题，一起寻找解决的办法，一起规划我们的未来。你懂我的逞强，知我的软肋，总能在我需要的时候，给我温暖和力量，让我觉得，无论遇到什么困难，只要有你在，就什么都不用怕。
+
+可我也知道，你并不是永远都那么坚强。你习惯了体谅别人，习惯了把委屈藏在心里，每当你受了委屈，就会默默沉默，不说话、不抱怨，可我看着你眼底的失落，看着你故作坚强的样子，心里就像被揪着一样难受。晓茹，我想告诉你，往后的日子里，不用一直憋着自己，不用什么都自己扛，我的肩膀永远为你停留，你可以委屈，可以难过，可以肆无忌惮地向我倾诉，我会一直陪着你，哄着你，护着你，不让你再受半点委屈。
+
+马上就是你的生日了，农历二月十三，这个属于你的特别日子，我满心期待，也满心祝福。愿我的女孩，往后余生，平安喜乐，万事顺意，眼里有光，心中有爱，不用迎合任何人，不用勉强自己，永远保持这份纯粹与温柔。
+
+晓茹，遇见你，是缘分，也是幸运；爱上你，是心动，更是坚定。从初中校园的擦肩而过，到如今的朝夕相伴，我知道，你就是我想要的未来。往后，我会好好对你，好好珍惜我们的感情，和你一起面对所有的风雨，一起奔赴更远的未来，把每一份温柔都给你，把每一份偏爱都留给你，余生漫漫，皆是你，满心欢喜，全是你。
+
+爱你的玉豪`;
+
+        // 情话列表
+        const loveQuotes = [
+            "遇见你，是缘分，也是幸运；爱上你，是心动，更是坚定",
+            "我会一直爱你，直到永远",
+            "我的肩膀永远为你停留",
+            "余生漫漫，皆是你，满心欢喜，全是你",
+            "愿我的女孩永远快乐、健康、美丽",
+            "距离让我们的感情更加珍贵",
+            "每一天都在思念你，每一刻都想拥抱你",
+            "你是我想共度往后每一段时光的人"
+        ];
+
         // 创建飘落的心形
         function createHearts() {
             const surprisePage = document.getElementById('surprise-page');
@@ -557,17 +798,171 @@
             }
         }
 
+        // 在一起计时器
+        function initTimer() {
+            const startDate = new Date('2025-05-31');
+            const today = new Date();
+            const diffTime = today - startDate;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('days-count').textContent = diffDays;
+        }
+
+        // 情话轮播
+        let currentQuote = 0;
+        let quoteInterval;
+
+        function initQuoteCarousel() {
+            const dotsContainer = document.getElementById('quote-dots');
+            for (let i = 0; i < loveQuotes.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'quote-dot' + (i === 0 ? ' active' : '');
+                dot.onclick = () => goToQuote(i);
+                dotsContainer.appendChild(dot);
+            }
+            showQuote(0);
+            startQuoteAutoPlay();
+        }
+
+        function showQuote(index) {
+            const quoteText = document.getElementById('quote-text');
+            const dots = document.querySelectorAll('.quote-dot');
+
+            // 淡出
+            quoteText.style.opacity = 0;
+
+            setTimeout(() => {
+                quoteText.textContent = loveQuotes[index];
+                // 淡入
+                quoteText.style.animation = 'none';
+                quoteText.offsetHeight; // 触发重绘
+                quoteText.style.animation = 'quoteFade 1s ease forwards';
+
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+            }, 300);
+        }
+
+        function goToQuote(index) {
+            currentQuote = index;
+            showQuote(currentQuote);
+            startQuoteAutoPlay();
+        }
+
+        function nextQuote() {
+            currentQuote = (currentQuote + 1) % loveQuotes.length;
+            showQuote(currentQuote);
+        }
+
+        function startQuoteAutoPlay() {
+            if (quoteInterval) clearInterval(quoteInterval);
+            quoteInterval = setInterval(nextQuote, 3000);
+        }
+
+        // 情书功能
+        function openLetter() {
+            document.getElementById('letter-text').textContent = letterContent;
+            document.getElementById('letter-modal').classList.add('show');
+        }
+
+        function closeLetter() {
+            document.getElementById('letter-modal').classList.remove('show');
+        }
+
+        // 情书模态框点击关闭
+        document.getElementById('letter-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeLetter();
+        });
+
+        // 入口按钮点击处理
+        let entryStep = 0;
+        let zoomLevel = 0;
+        function handleEntryClick() {
+            const btn = document.getElementById('entry-btn');
+
+            if (entryStep === 0) {
+                // 第一次点击：显示模糊图片
+                document.getElementById('photo-container').style.display = 'block';
+                btn.textContent = '再点一下';
+                entryStep = 1;
+            } else if (entryStep === 1) {
+                // 第二次点击：变清楚但还是小
+                zoomLevel = 1;
+                zoomPhoto();
+                btn.textContent = '继续';
+                entryStep = 2;
+            } else if (entryStep === 2) {
+                // 第三次点击：变大到最大
+                zoomLevel = 2;
+                zoomPhoto();
+                btn.style.display = 'none';
+                entryStep = 3;
+                // 显示满意度询问
+                setTimeout(() => {
+                    document.getElementById('satisfaction-modal').style.display = 'block';
+                }, 500);
+            }
+        }
+
+        // 图片放大
+        function zoomPhoto() {
+            const photo = document.getElementById('mystery-photo');
+            const hint = document.getElementById('zoom-hint');
+
+            if (zoomLevel === 1) {
+                // 变清楚但还是小
+                photo.style.filter = 'blur(0px)';
+                photo.style.maxWidth = '40%';
+                hint.textContent = '太小了？点击变大';
+            } else if (zoomLevel === 2) {
+                // 变大到最大
+                photo.style.filter = 'blur(0px)';
+                photo.style.maxWidth = '200%';
+                hint.style.display = 'none';
+            }
+        }
+
+        // 满意度回答
+        function answerSatisfaction(isSatisfied) {
+            document.getElementById('satisfaction-modal').style.display = 'none';
+            showRealSurprise();
+        }
+
+        // 显示真正的惊喜
+        function showRealSurprise() {
+            const realSurprise = document.getElementById('real-surprise-page');
+            realSurprise.style.display = 'flex';
+
+            let count = 3;
+            const countdownEl = document.getElementById('countdown');
+            countdownEl.textContent = count;
+
+            const timer = setInterval(() => {
+                count--;
+                countdownEl.textContent = count;
+                if (count <= 0) {
+                    clearInterval(timer);
+                    openSurprise();
+                }
+            }, 1000);
+        }
+
         // 打开惊喜
         function openSurprise() {
             const entryPage = document.getElementById('entry-page');
             const surprisePage = document.getElementById('surprise-page');
+            const realSurprise = document.getElementById('real-surprise-page');
 
+            // 隐藏过渡页面
+            if (realSurprise) realSurprise.style.display = 'none';
             entryPage.classList.add('hidden');
 
             setTimeout(() => {
                 createHearts();
                 createStars();
                 surprisePage.classList.add('show');
+                initTimer();
+                initQuoteCarousel();
             }, 500);
         }
 
