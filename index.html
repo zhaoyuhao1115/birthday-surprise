@@ -440,6 +440,17 @@
             .entry-title {
                 font-size: 1.8rem;
             }
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            .memory-btn, .letter-btn {
+                margin-left: 0;
+                margin-top: 0;
+                padding: 0.8rem 1.8rem;
+                font-size: 1rem;
+            }
         }
 
         /* 在一起计时器 */
@@ -578,9 +589,16 @@
 
         .letter-text {
             color: #e8d5eb;
-            line-height: 2.2;
+            line-height: 2.4;
             font-size: 1.1rem;
             white-space: pre-wrap;
+            text-align: justify;
+        }
+
+        .letter-text::first-letter {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #ff6b9d;
         }
 
         .letter-close {
@@ -1010,7 +1028,6 @@
         function openCarousel() {
             const modal = document.getElementById('carousel-modal');
             modal.classList.add('show');
-            startAutoPlay();
         }
 
         function closeCarousel() {
