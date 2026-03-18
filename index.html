@@ -18,6 +18,17 @@
             min-height: 100vh;
         }
 
+        /* 烟花 Canvas */
+        #firework-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+        }
+
         /* 入口页面 */
         #entry-page {
             position: fixed;
@@ -264,6 +275,46 @@
             font-size: 0.9rem;
         }
 
+        /* 增强计时器 */
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease forwards;
+            animation-delay: 1.5s;
+        }
+
+        .timer-block {
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            border-radius: 15px;
+            padding: 0.8rem 1.2rem;
+            min-width: 80px;
+        }
+
+        .timer-number {
+            font-size: 1.8rem;
+            color: #ffd700;
+            font-weight: bold;
+            display: block;
+            animation: timerPop 0.3s ease;
+        }
+
+        @keyframes timerPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .timer-label {
+            font-size: 0.8rem;
+            color: rgba(255, 215, 0, 0.7);
+            margin-top: 0.3rem;
+        }
+
         /* 回忆按钮 */
         .memory-btn {
             margin-top: 2rem;
@@ -350,6 +401,21 @@
             height: 100%;
             object-fit: cover;
             border-radius: 15px;
+        }
+
+        /* 照片配文 */
+        .photo-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            text-align: center;
+            max-width: 80%;
         }
 
         .carousel-nav {
@@ -451,20 +517,13 @@
                 padding: 0.8rem 1.8rem;
                 font-size: 1rem;
             }
-        }
-
-        /* 在一起计时器 */
-        .timer {
-            font-size: 1.3rem;
-            color: #ffd700;
-            margin: 1.5rem 0;
-            padding: 1rem 2rem;
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 30px;
-            animation: fadeInUp 1.5s ease forwards;
-            animation-delay: 1.5s;
-            opacity: 0;
+            .timer-block {
+                min-width: 60px;
+                padding: 0.5rem 0.8rem;
+            }
+            .timer-number {
+                font-size: 1.4rem;
+            }
         }
 
         /* 情话轮播 */
@@ -617,9 +676,233 @@
             color: #fff;
         }
 
+        /* 生日蛋糕 */
+        .cake-container {
+            position: relative;
+            margin: 1rem auto;
+            cursor: pointer;
+            width: 200px;
+            height: 200px;
+        }
+
+        .cake {
+            width: 200px;
+            height: 150px;
+            position: relative;
+        }
+
+        .cake-body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 80px;
+            background: linear-gradient(180deg, #ff9a9e 0%, #fecfef 50%, #ff6b9d 100%);
+            border-radius: 10px 10px 5px 5px;
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .cake-body::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+
+        .cake-layer {
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 40px;
+            background: linear-gradient(180deg, #ffd700 0%, #ffec8b 50%, #ffd700 100%);
+            border-radius: 10px 10px 5px 5px;
+            box-shadow: 0 3px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .cake-icing {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 30px;
+            background: linear-gradient(180deg, #fff 0%, #f0f0f0 100%);
+            border-radius: 50% 50% 20% 20%;
+        }
+
+        .candle {
+            position: absolute;
+            bottom: 130px;
+            left: 50%;
+            margin-left: -4px;
+            width: 8px;
+            height: 40px;
+            background: linear-gradient(90deg, #ff6b9d, #c44569);
+            border-radius: 3px;
+        }
+
+        .candle-flame {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            margin-left: -8px;
+            width: 16px;
+            height: 30px;
+            background: linear-gradient(180deg, #fff 0%, #ffd700 30%, #ff6b9d 70%, #ff4500 100%);
+            border-radius: 50% 50% 20% 20%;
+            animation: flicker 0.3s ease-in-out infinite alternate;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .candle-flame::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            margin-left: -10px;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(ellipse, rgba(255,255,200,0.9), rgba(255,200,100,0.5), transparent);
+            border-radius: 50%;
+            animation: glow 0.5s ease-in-out infinite alternate;
+        }
+
+        .candle.blown .candle-flame {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        @keyframes glow {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .blow-hint {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .cake-message {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            color: #ffd700;
+            font-size: 1rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
+        /* 语音祝福按钮 */
+        .voice-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 107, 157, 0.4);
+            z-index: 100;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .voice-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255, 107, 157, 0.6);
+        }
+
+        .voice-btn.playing {
+            animation: voicePulse 1s ease-in-out infinite;
+        }
+
+        @keyframes voicePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        /* 倒计时过渡页面 */
+        .countdown-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a0a2e, #2d1b4e);
+            z-index: 150;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .countdown-overlay.show {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .countdown-text {
+            color: #ff6b9d;
+            font-size: 1.8rem;
+            text-align: center;
+            line-height: 2;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .countdown-number {
+            font-size: 6rem;
+            color: #ffd700;
+            font-weight: bold;
+            margin-top: 2rem;
+            animation: countPop 1s ease-in-out;
+        }
+
+        @keyframes countPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* 倒计时粒子 */
+        .countdown-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 215, 0, 0.6);
+            border-radius: 50%;
+            animation: particleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
+    <!-- 烟花 Canvas -->
+    <canvas id="firework-canvas"></canvas>
+
     <!-- 入口页面 -->
     <div id="entry-page">
         <h1 class="entry-title">亲爱的宝贝儿</h1>
@@ -638,21 +921,32 @@
 
         <!-- 满意度询问弹窗 -->
         <div id="satisfaction-modal" style="display: none; margin-top: 1rem; text-align: center;">
-            <div style="background: linear-gradient(135deg, #2d1b4e, #1a0a2e); padding: 1.5rem 2rem; border-radius: 15px; display: inline-block; border: 1px solid rgba(255,107,157,0.3); box-shadow: 0 0 30px rgba(255,107,157,0.3);">
+            <div id="satisfaction-question" style="background: linear-gradient(135deg, #2d1b4e, #1a0a2e); padding: 1.5rem 2rem; border-radius: 15px; display: inline-block; border: 1px solid rgba(255,107,157,0.3); box-shadow: 0 0 30px rgba(255,107,157,0.3);">
                 <div style="color: #fff; font-size: 1.2rem; margin-bottom: 1rem;">对这个惊喜你满意吗？</div>
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <button onclick="answerSatisfaction(true)" style="padding: 0.6rem 1.5rem; font-size: 1rem; background: linear-gradient(45deg, #ff6b9d, #c44569); color: white; border: none; border-radius: 20px; cursor: pointer; transition: all 0.3s ease;">我很满意</button>
-                    <button onclick="answerSatisfaction(false)" style="padding: 0.6rem 1.5rem; font-size: 1rem; background: linear-gradient(45deg, #9b59b6, #e74c8c); color: white; border: none; border-radius: 20px; cursor: pointer; transition: all 0.3s ease;">我不满意</button>
+                    <button onclick="showDateVerification()" style="padding: 0.6rem 1.5rem; font-size: 1rem; background: linear-gradient(45deg, #ff6b9d, #c44569); color: white; border: none; border-radius: 20px; cursor: pointer; transition: all 0.3s ease;">我很满意</button>
+                    <button onclick="showDateVerification()" style="padding: 0.6rem 1.5rem; font-size: 1rem; background: linear-gradient(45deg, #9b59b6, #e74c8c); color: white; border: none; border-radius: 20px; cursor: pointer; transition: all 0.3s ease;">我不满意</button>
+                </div>
+            </div>
+
+            <!-- 日期验证输入 -->
+            <div id="date-verification" style="display: none;">
+                <div style="background: linear-gradient(135deg, #2d1b4e, #1a0a2e); padding: 1.5rem 2rem; border-radius: 15px; border: 1px solid rgba(255,107,157,0.3); box-shadow: 0 0 30px rgba(255,107,157,0.3);">
+                    <div style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">请输入我们在一起的日期解锁真正的线上礼物<br><span style="font-size: 0.9rem; color: #aaa;">（格式：YYYY-MM-DD）</span></div>
+                    <input type="text" id="date-input" placeholder="例如：2025-05-31"
+                           style="padding: 0.6rem 1rem; font-size: 1rem; border: 2px solid rgba(255,107,157,0.5); border-radius: 10px; background: rgba(255,255,255,0.1); color: #fff; text-align: center; width: 180px; outline: none;">
+                    <div id="date-error" style="color: #ff6b6b; font-size: 0.9rem; margin-top: 0.5rem; display: none;">宝贝看提示呀！</div>
+                    <div style="margin-top: 1rem;">
+                        <button onclick="verifyDate()" style="padding: 0.6rem 1.5rem; font-size: 1rem; background: linear-gradient(45deg, #ff6b9d, #c44569); color: white; border: none; border-radius: 20px; cursor: pointer; transition: all 0.3s ease;">确认</button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- 真正的惊喜过渡页面 -->
-        <div id="real-surprise-page" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1a0a2e, #2d1b4e); z-index: 150; justify-content: center; align-items: center; flex-direction: column;">
-            <div style="color: #ff6b9d; font-size: 1.8rem; text-align: center; line-height: 2; animation: pulse 1s ease-in-out infinite;">
-                真正的惊喜这才来了<br>请耐心等待
-            </div>
-            <div id="countdown" style="color: #ffd700; font-size: 4rem; margin-top: 2rem; font-weight: bold;">3</div>
+        <div class="countdown-overlay" id="real-surprise-page">
+            <div class="countdown-text">真正的惊喜这才来了<br>请耐心等待</div>
+            <div class="countdown-number" id="countdown">3</div>
         </div>
 
         <button class="open-btn" id="entry-btn" onclick="handleEntryClick()">点击打开惊喜</button>
@@ -664,6 +958,20 @@
             <div class="greeting">生日快乐</div>
             <div class="name">索晓茹</div>
             <div class="date-info">农历二月十三 · 阳历三月十一</div>
+
+            <!-- 生日蛋糕 -->
+            <div class="cake-container" onclick="blowCandle()">
+                <div class="cake">
+                    <div class="candle" id="candle">
+                        <div class="candle-flame" id="candle-flame"></div>
+                    </div>
+                    <div class="cake-icing"></div>
+                    <div class="cake-layer"></div>
+                    <div class="cake-body"></div>
+                </div>
+                <div class="blow-hint">点击蛋糕吹灭蜡烛</div>
+                <div class="cake-message" id="cake-message" style="display: none;">祝你生日快乐！🎂</div>
+            </div>
 
             <div class="distance">
                 <span class="city">广州</span>
@@ -682,7 +990,25 @@
                 我会一直爱你，直到永远 ❤️
             </div>
 
-            <div class="timer" id="timer">我们已经在一起 <span id="days-count">0</span> 天</div>
+            <!-- 增强计时器 -->
+            <div class="timer" id="timer">
+                <div class="timer-block">
+                    <span class="timer-number" id="days">0</span>
+                    <div class="timer-label">天</div>
+                </div>
+                <div class="timer-block">
+                    <span class="timer-number" id="hours">0</span>
+                    <div class="timer-label">小时</div>
+                </div>
+                <div class="timer-block">
+                    <span class="timer-number" id="minutes">0</span>
+                    <div class="timer-label">分钟</div>
+                </div>
+                <div class="timer-block">
+                    <span class="timer-number" id="seconds">0</span>
+                    <div class="timer-label">秒</div>
+                </div>
+            </div>
 
             <div class="button-container">
                 <button class="memory-btn" onclick="openCarousel()">查看我们的回忆</button>
@@ -698,6 +1024,9 @@
 
         <div class="footer">永远爱你的HAO ❤️</div>
     </div>
+
+    <!-- 语音祝福按钮 -->
+    <button class="voice-btn" id="voice-btn" onclick="playVoiceGreeting()">🔊</button>
 
     <!-- 情书模态框 -->
     <div class="letter-modal" id="letter-modal">
@@ -715,33 +1044,43 @@
         <div class="carousel-container">
             <div class="carousel-slide active">
                 <img src="picture/IMG_20250712_170727.jpg" alt="回忆1">
+                <div class="photo-caption">2025年7月12日 · 广州行</div>
             </div>
             <div class="carousel-slide">
                 <img src="picture/IMG_20250712_195839.jpg" alt="回忆2">
+                <div class="photo-caption">2025年7月12日 · 欢乐时光</div>
             </div>
             <div class="carousel-slide">
                 <img src="picture/IMG_20250713_104746.jpg" alt="回忆3">
+                <div class="photo-caption">2025年7月13日 · 美好的一天</div>
             </div>
             <div class="carousel-slide">
                 <img src="picture/IMG_20250715_211040.jpg" alt="回忆4">
+                <div class="photo-caption">2025年7月15日 · 甜蜜瞬间</div>
             </div>
             <div class="carousel-slide">
                 <img src="picture/IMG_20250715_211117.jpg" alt="回忆5">
+                <div class="photo-caption">2025年7月15日 · 浪漫时刻</div>
             </div>
             <div class="carousel-slide">
                 <img src="picture/IMG_20250717_104030.jpg" alt="回忆6">
+                <div class="photo-caption">2025年7月17日 · 清晨的回忆</div>
             </div>
             <div class="carousel-slide">
                 <img src="picture/IMG_20250717_175059.jpg" alt="回忆7">
+                <div class="photo-caption">2025年7月17日 · 下午的甜蜜</div>
             </div>
             <div class="carousel-slide">
                 <img src="picture/IMG_20250717_191630.jpg" alt="回忆8">
+                <div class="photo-caption">2025年7月17日 · 傍晚时分</div>
             </div>
             <div class="carousel-slide">
                 <img src="picture/IMG_20250718_163614.jpg" alt="回忆9">
+                <div class="photo-caption">2025年7月18日 · 难忘回忆</div>
             </div>
             <div class="carousel-slide">
                 <img src="picture/IMG_20250718_164842.jpg" alt="回忆10">
+                <div class="photo-caption">2025年7月18日 · 海岛的故事</div>
             </div>
 
             <button class="carousel-nav carousel-prev" onclick="prevSlide()">&#10094;</button>
@@ -768,7 +1107,7 @@
 
 马上就是你的生日了，农历二月十三，这个属于你的特别日子，我满心期待，也满心祝福。愿我的女孩，往后余生，平安喜乐，万事顺意，眼里有光，心中有爱，不用迎合任何人，不用勉强自己，永远保持这份纯粹与温柔。
 
-晓茹，遇见你，是缘分，也是幸运；爱上你，是心动，更是坚定。从初中校园的擦肩而过，到如今的朝夕相伴，我知道，你就是我想要的未来。往后，我会好好对你，好好珍惜我们的感情，和你一起面对所有的风雨，一起奔赴更远的未来，把每一份温柔都给你，把每一份偏爱都留给你，余生漫漫，皆是你，满心欢喜，全是你。
+晓茹，遇见你，是缘分，也是幸运；爱上你，是心动，更是坚定。从初中校园的擦肩而过，到如今的朝夕相伴，我知道，你就是我想要的未来。往后，我会好好对你，好好珍惜我们的感情，和你一起面对所有的风雨，一起奔赴更远的未来，把每一份温柔都给你，把每一一份偏爱都留给你，余生漫漫，皆是你，满心欢喜，全是你。
 
 爱你的玉豪`;
 
@@ -784,7 +1123,236 @@
             "你是我想共度往后每一段时光的人"
         ];
 
-        // 创建飘落的心形
+        // ========== 烟花效果 ==========
+        class Firework {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.particles = [];
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            createParticle(x, y, color) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 5 + 2;
+                this.particles.push({
+                    x: x,
+                    y: y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    color: color,
+                    alpha: 1,
+                    size: Math.random() * 3 + 2,
+                    decay: Math.random() * 0.02 + 0.01
+                });
+            }
+
+            createFirework(startX, startY, targetX, targetY) {
+                const colors = ['#ff6b9d', '#ffd700', '#ff9a9e', '#c44569', '#fff'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+
+                // 创建爆炸粒子
+                for (let i = 0; i < 50; i++) {
+                    this.createParticle(targetX, targetY, color);
+                }
+            }
+
+            update() {
+                this.particles = this.particles.filter(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.1; // 重力
+                    p.alpha -= p.decay;
+                    return p.alpha > 0;
+                });
+            }
+
+            draw() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.particles.forEach(p => {
+                    this.ctx.save();
+                    this.ctx.globalAlpha = p.alpha;
+                    this.ctx.fillStyle = p.color;
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.restore();
+                });
+            }
+
+            animate() {
+                this.update();
+                this.draw();
+            }
+
+            launch() {
+                const startX = Math.random() * this.canvas.width;
+                const startY = this.canvas.height;
+                const targetX = Math.random() * this.canvas.width * 0.6 + this.canvas.width * 0.2;
+                const targetY = Math.random() * this.canvas.height * 0.4 + this.canvas.height * 0.1;
+
+                // 简单的上升动画
+                let y = startY;
+                const interval = setInterval(() => {
+                    y -= 10;
+                    if (y <= targetY) {
+                        clearInterval(interval);
+                        this.createFirework(startX, startY, targetX, targetY);
+                    }
+                }, 30);
+            }
+        }
+
+        let firework = null;
+        let fireworkInterval = null;
+
+        function startFireworks() {
+            if (!firework) {
+                firework = new Firework(document.getElementById('firework-canvas'));
+            }
+            fireworkInterval = setInterval(() => {
+                firework.launch();
+            }, 800);
+        }
+
+        function stopFireworks() {
+            if (fireworkInterval) {
+                clearInterval(fireworkInterval);
+                fireworkInterval = null;
+            }
+        }
+
+        // ========== 语音祝福 ==========
+        function autoPlayVoiceGreeting() {
+            const message = "亲爱的晓茹，生日快乐！愿你永远快乐、健康、美丽。我爱你！";
+            const utterance = new SpeechSynthesisUtterance(message);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+
+            utterance.onstart = () => {
+                document.getElementById('voice-btn').classList.add('playing');
+            };
+
+            utterance.onend = () => {
+                document.getElementById('voice-btn').classList.remove('playing');
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function playVoiceGreeting() {
+            const btn = document.getElementById('voice-btn');
+
+            if (btn.classList.contains('playing')) {
+                window.speechSynthesis.cancel();
+                btn.classList.remove('playing');
+                return;
+            }
+
+            const message = "亲爱的晓茹，生日快乐！愿你永远快乐、健康、美丽。我爱你！";
+            const utterance = new SpeechSynthesisUtterance(message);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+
+            utterance.onstart = () => {
+                btn.classList.add('playing');
+            };
+
+            utterance.onend = () => {
+                btn.classList.remove('playing');
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // ========== 吹蜡烛 ==========
+        let candleBlown = false;
+        function blowCandle() {
+            if (candleBlown) return;
+
+            const candle = document.getElementById('candle');
+            const message = document.getElementById('cake-message');
+
+            candle.classList.add('blown');
+            candleBlown = true;
+
+            setTimeout(() => {
+                message.style.display = 'block';
+                message.style.animation = 'fadeInUp 0.5s ease forwards';
+            }, 500);
+        }
+
+        // ========== 增强计时器 ==========
+        function initTimer() {
+            const startDate = new Date('2025-05-31');
+
+            function updateTimer() {
+                const now = new Date();
+                const diff = now - startDate;
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            }
+
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
+        // ========== 情书打字机效果 ==========
+        let typingInterval = null;
+        function openLetter() {
+            const letterText = document.getElementById('letter-text');
+            letterText.textContent = '';
+            document.getElementById('letter-modal').classList.add('show');
+
+            // 打字机效果
+            let index = 0;
+            const text = letterContent;
+
+            if (typingInterval) clearInterval(typingInterval);
+
+            typingInterval = setInterval(() => {
+                if (index < text.length) {
+                    letterText.textContent += text.charAt(index);
+                    index++;
+                    // 自动滚动到底部
+                    const content = document.querySelector('.letter-content');
+                    content.scrollTop = content.scrollHeight;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, 30);
+        }
+
+        function closeLetter() {
+            document.getElementById('letter-modal').classList.remove('show');
+            if (typingInterval) {
+                clearInterval(typingInterval);
+                typingInterval = null;
+            }
+        }
+
+        // 情书模态框点击关闭
+        document.getElementById('letter-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeLetter();
+        });
+
+        // ========== 创建飘落的心形 ==========
         function createHearts() {
             const surprisePage = document.getElementById('surprise-page');
             const heartCount = 30;
@@ -801,7 +1369,7 @@
             }
         }
 
-        // 创建星星
+        // ========== 创建星星 ==========
         function createStars() {
             const surprisePage = document.getElementById('surprise-page');
             const starCount = 50;
@@ -816,16 +1384,7 @@
             }
         }
 
-        // 在一起计时器
-        function initTimer() {
-            const startDate = new Date('2025-05-31');
-            const today = new Date();
-            const diffTime = today - startDate;
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            document.getElementById('days-count').textContent = diffDays;
-        }
-
-        // 情话轮播
+        // ========== 情话轮播 ==========
         let currentQuote = 0;
         let quoteInterval;
 
@@ -877,22 +1436,7 @@
             quoteInterval = setInterval(nextQuote, 3000);
         }
 
-        // 情书功能
-        function openLetter() {
-            document.getElementById('letter-text').textContent = letterContent;
-            document.getElementById('letter-modal').classList.add('show');
-        }
-
-        function closeLetter() {
-            document.getElementById('letter-modal').classList.remove('show');
-        }
-
-        // 情书模态框点击关闭
-        document.getElementById('letter-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeLetter();
-        });
-
-        // 入口按钮点击处理
+        // ========== 入口按钮点击处理 ==========
         let entryStep = 0;
         let zoomLevel = 0;
         function handleEntryClick() {
@@ -940,24 +1484,68 @@
             }
         }
 
-        // 满意度回答
-        function answerSatisfaction(isSatisfied) {
-            document.getElementById('satisfaction-modal').style.display = 'none';
-            showRealSurprise();
+        // 显示日期验证
+        function showDateVerification() {
+            document.getElementById('satisfaction-question').style.display = 'none';
+            document.getElementById('date-verification').style.display = 'block';
+            document.getElementById('date-input').focus();
         }
 
-        // 显示真正的惊喜
+        // 验证日期
+        function verifyDate() {
+            const input = document.getElementById('date-input').value.trim();
+            const correctDate = '2025-05-31';
+            const errorMsg = document.getElementById('date-error');
+
+            if (input === correctDate) {
+                document.getElementById('satisfaction-modal').style.display = 'none';
+                showRealSurprise();
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('date-input').value = '';
+                document.getElementById('date-input').focus();
+            }
+        }
+
+        // 回车键提交日期
+        document.getElementById('date-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyDate();
+            }
+        });
+
+        // 显示真正的惊喜 - 增强倒计时动画
         function showRealSurprise() {
             const realSurprise = document.getElementById('real-surprise-page');
-            realSurprise.style.display = 'flex';
+            realSurprise.classList.add('show');
+
+            // 创建粒子背景
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'countdown-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                realSurprise.appendChild(particle);
+            }
 
             let count = 3;
             const countdownEl = document.getElementById('countdown');
             countdownEl.textContent = count;
 
+            // 数字弹出动画
+            countdownEl.style.animation = 'none';
+            countdownEl.offsetHeight; // 触发重绘
+            countdownEl.style.animation = 'countPop 1s ease-in-out';
+
             const timer = setInterval(() => {
                 count--;
                 countdownEl.textContent = count;
+                // 每次数字变化时重新触发动画
+                countdownEl.style.animation = 'none';
+                countdownEl.offsetHeight;
+                countdownEl.style.animation = 'countPop 1s ease-in-out';
+
                 if (count <= 0) {
                     clearInterval(timer);
                     openSurprise();
@@ -972,7 +1560,7 @@
             const realSurprise = document.getElementById('real-surprise-page');
 
             // 隐藏过渡页面
-            if (realSurprise) realSurprise.style.display = 'none';
+            if (realSurprise) realSurprise.classList.remove('show');
             entryPage.classList.add('hidden');
 
             setTimeout(() => {
@@ -981,10 +1569,20 @@
                 surprisePage.classList.add('show');
                 initTimer();
                 initQuoteCarousel();
+                // 启动烟花
+                startFireworks();
+                // 5秒后停止烟花
+                setTimeout(() => {
+                    stopFireworks();
+                }, 8000);
+                // 自动播放语音祝福
+                setTimeout(() => {
+                    autoPlayVoiceGreeting();
+                }, 1500);
             }, 500);
         }
 
-        // 照片轮播功能
+        // ========== 照片轮播功能 ==========
         let currentSlide = 0;
         const slides = document.querySelectorAll('.carousel-slide');
         const totalSlides = slides.length;
@@ -1028,6 +1626,7 @@
         function openCarousel() {
             const modal = document.getElementById('carousel-modal');
             modal.classList.add('show');
+            startAutoPlay();
         }
 
         function closeCarousel() {
@@ -1062,8 +1661,17 @@
             if (e.target === this) closeCarousel();
         });
 
-        // 初始化
+        // ========== 初始化 ==========
         initCarousel();
+
+        // 启动烟花动画循环
+        function animateFireworks() {
+            if (firework) {
+                firework.animate();
+            }
+            requestAnimationFrame(animateFireworks);
+        }
+        animateFireworks();
     </script>
 </body>
 </html>
